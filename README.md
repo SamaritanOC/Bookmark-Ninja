@@ -167,7 +167,7 @@ Fields: url, title, category (full folder path as breadcrumb), description, date
 
 This tool was built for and extracted from [The Samaritan Project](https://buymeacoffee.com/thesamaritanproject) — a build-in-public, self-hosted, multi-agent OSINT and intelligence research platform built on OpenClaw running on Parrot OS bare metal.
 
-Samaritan runs 11 specialized investigation agents. Bookmark Ninja is the pipeline that feeds its 1,900+ entry intelligence source library across 246 categories. This is one of several internal tools extracted and open sourced from a production AI investigation platform.
+Samaritan is an OSINT automation platform that runs 11 specialized investigation agents. Bookmark Ninja is the pipeline that feeds its 1,900+ entry intelligence source library across 246 categories. This is one of several internal tools extracted and open sourced from a production AI investigation platform.
 
 Support The Samaritan Project at [buymeacoffee.com/thesamaritanproject](https://buymeacoffee.com/thesamaritanproject)
 
@@ -181,5 +181,7 @@ MIT — free to use, modify, and distribute.
 ## About the developer
 
 **Harold Mansfield**
+
 AI Integration Consultant | AI Coaching | Agentic OSINT Automation | Sec+ CySA+
+
 [LinkedIn ](https://linkedin.com/in/haroldmansfield/) 
