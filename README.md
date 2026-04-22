@@ -1,5 +1,5 @@
 # Bookmark Ninja
-
+<img=src="https://labb.run/wp-content/uploads/2025/11/bkm-ninja-logo.png">
 **Turn your browser bookmarks into a knowledge base your AI agent can actually search.**
 
 Converts any browser HTML bookmark export into a clean, structured JSON index with full folder hierarchy preserved, deduplication, merge support, and optional URL liveness verification.
