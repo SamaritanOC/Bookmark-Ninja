@@ -169,11 +169,7 @@ This tool was built for and extracted from [The Samaritan Project](https://buyme
 
 Samaritan runs 11 specialized investigation agents. Bookmark Ninja is the pipeline that feeds its 1,900+ entry intelligence source library across 246 categories. This is one of several internal tools extracted and open sourced from a production AI investigation platform.
 
-The goal is not to sell software. It is to demonstrate that production-grade AI tooling can be built, shipped, and maintained by a single operator — and to show exactly how it was done.
-
-Follow the build at [buymeacoffee.com/thesamaritanproject](https://buymeacoffee.com/thesamaritanproject)
-
-Other open source tools from the same platform: [Search Ninja](https://github.com/SamaritanOC/Search-Ninja)
+Support The Samaritan Project at [buymeacoffee.com/thesamaritanproject](https://buymeacoffee.com/thesamaritanproject)
 
 ---
 
@@ -182,5 +178,6 @@ Other open source tools from the same platform: [Search Ninja](https://github.co
 MIT — free to use, modify, and distribute.
 
 ---
-
-*Built by [Harold Mansfield](https://github.com/SamaritanOC) — AI Systems Engineer*
+## Harold Mansfield
+AI Integration Consultant | AI Coaching | Agentic OSINT Automation | Sec+ CySA+
+ [LinkedIn ](https://linkedin.com/in/haroldmansfield/) 
