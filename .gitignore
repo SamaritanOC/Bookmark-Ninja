@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+bookmarks-index.json
+*.csv
+*.html
