@@ -4,7 +4,7 @@
 
 Converts any browser HTML bookmark export into a clean, structured JSON index with full folder hierarchy preserved, deduplication, merge support, and optional URL liveness verification.
 
-Built as a core utility inside [The Samaritan Project](https://github.com/SamaritanOC/SamaritanV01) — a self-hosted, multi-agent OSINT investigation platform running on OpenClaw. Bookmark Ninja powers Samaritan's 1,900+ entry intelligence source library across 246 categories.
+Built as an internal tool for [The Samaritan Project](https://buymeacoffee.com/thesamaritanproject) — a self-hosted, multi-agent OSINT and intelligence research platform built on OpenClaw running on Parrot OS bare metal. In production it manages a 1,900+ entry intelligence source library across 246 categories, used by 11 specialized investigation agents.
 
 ---
 
@@ -13,6 +13,40 @@ Built as a core utility inside [The Samaritan Project](https://github.com/Samari
 Browser export (HTML) -> bookmark-parser.py -> bookmarks-index.json -> agent queries it
 
 One command. No API keys. No external services. No configuration.
+
+---
+
+## Installation
+
+**Requirements:** Python 3.7+. No API keys. No external services.
+
+**Optional:** requests library for URL liveness checking:
+
+    pip install requests
+
+### Method 1: OpenClaw Dashboard (Recommended)
+
+1. Download the latest release ZIP from the [Releases](https://github.com/SamaritanOC/Bookmark-Ninja/releases) page
+2. Open your OpenClaw dashboard
+3. Navigate to the **Skills** tab
+4. Click **Add Skill** or **Upload Skill**
+5. Select the extracted `bookmark-ninja` folder
+6. Enable the skill
+
+Bookmark Ninja will appear in your agent skill list and activate automatically on bookmark-related tasks.
+
+### Method 2: Command Line
+
+    git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
+    cp -r Bookmark-Ninja/bookmark-ninja ~/.openclaw/skills/
+    systemctl --user restart openclaw-gateway.service
+    openclaw skills list
+
+### Method 3: Standalone (no OpenClaw)
+
+    git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
+    cd Bookmark-Ninja
+    python3 bookmark-ninja/bookmark-parser.py your-bookmarks.html
 
 ---
 
@@ -49,31 +83,6 @@ Output: bookmarks-index.json — structured, searchable, agent-ready.
 
     # Find dead links
     dead = [b for b in bookmarks if b.get("alive") == False]
-
----
-
-## Installation
-
-**Requirements:** Python 3.7+. No API keys. No external services.
-
-**Optional:** requests library for URL liveness checking:
-
-    pip install requests
-
-### Standalone (no OpenClaw)
-
-    git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
-    cd Bookmark-Ninja
-    python3 bookmark-ninja/bookmark-parser.py your-bookmarks.html
-
-### OpenClaw Skill Installation
-
-    git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
-    cp -r Bookmark-Ninja/bookmark-ninja ~/.openclaw/skills/
-    systemctl --user restart openclaw-gateway.service
-    openclaw skills list
-
-Bookmark Ninja will appear in your agent skill list and activate automatically on bookmark-related tasks.
 
 ---
 
@@ -119,7 +128,7 @@ Adds alive: true/false to each entry. Note: 5s timeout per URL — slow on large
     [
       {
         "url": "https://dehashed.com/",
-        "title": "DeHashed — #FreeThePassword",
+        "title": "DeHashed -- #FreeThePassword",
         "category": "OSINT > Breach Data/Dumps",
         "description": "Searches breach, paste, or leak data for emails, usernames, and exposed records.",
         "date_added": "2026-03-14T09:20:00",
@@ -155,7 +164,13 @@ Fields: url, title, category (full folder path as breadcrumb), description, date
 
 ## Part of The Samaritan Project
 
-Bookmark Ninja was extracted from [The Samaritan Project](https://github.com/SamaritanOC/SamaritanV01), a self-hosted multi-agent OSINT and intelligence research platform built on OpenClaw. In production it manages a 1,900+ entry intelligence source library used across 11 specialized investigation agents.
+This tool was built for and extracted from [The Samaritan Project](https://buymeacoffee.com/thesamaritanproject) — a build-in-public, self-hosted, multi-agent OSINT and intelligence research platform built on OpenClaw running on Parrot OS bare metal.
+
+Samaritan runs 11 specialized investigation agents. Bookmark Ninja is the pipeline that feeds its 1,900+ entry intelligence source library across 246 categories. This is one of several internal tools extracted and open sourced from a production AI investigation platform.
+
+The goal is not to sell software. It is to demonstrate that production-grade AI tooling can be built, shipped, and maintained by a single operator — and to show exactly how it was done.
+
+Follow the build at [buymeacoffee.com/thesamaritanproject](https://buymeacoffee.com/thesamaritanproject)
 
 Other open source tools from the same platform: [Search Ninja](https://github.com/SamaritanOC/Search-Ninja)
 
