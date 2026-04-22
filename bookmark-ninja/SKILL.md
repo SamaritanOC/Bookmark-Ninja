@@ -5,7 +5,7 @@ description: Universal bookmark-to-knowledge-base converter. Ingests browser HTM
 
 
 Supports incremental merging, conflict resolution, and optional URL liveness verification. Use for research libraries, OSINT source management, legal discovery archives, or any profession requiring organized bookmark collections as queryable knowledge bases.
-homepage: https://clawhub.ai/samaritanoc/bookmark-ninja
+homepage: https://github.com/SamaritanOC/Bookmark-Ninja
 metadata:
   openclaw:
     requires:
