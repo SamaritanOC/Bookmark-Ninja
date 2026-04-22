@@ -178,6 +178,8 @@ Support The Samaritan Project at [buymeacoffee.com/thesamaritanproject](https://
 MIT — free to use, modify, and distribute.
 
 ---
-## Harold Mansfield
+## About the developer
+
+**Harold Mansfield**
 AI Integration Consultant | AI Coaching | Agentic OSINT Automation | Sec+ CySA+
- [LinkedIn ](https://linkedin.com/in/haroldmansfield/) 
+[LinkedIn ](https://linkedin.com/in/haroldmansfield/) 
