@@ -180,8 +180,7 @@ MIT — free to use, modify, and distribute.
 ---
 ## About the developer
 
-**Harold Mansfield**
-
+[**Harold Mansfield**](https://linkedin.com/in/haroldmansfield/) 
 AI Integration Consultant | AI Coaching | Agentic OSINT Automation | Sec+ CySA+
 
-[LinkedIn ](https://linkedin.com/in/haroldmansfield/) 
+
