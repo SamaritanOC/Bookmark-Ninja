@@ -26,12 +26,13 @@ One command. No API keys. No external services. No configuration.
 
 ### Method 1: OpenClaw Dashboard (Recommended)
 
-1. Download the latest release ZIP from the [Releases](https://github.com/SamaritanOC/Bookmark-Ninja/releases) page
-2. Open your OpenClaw dashboard
-3. Navigate to the **Skills** tab
-4. Click **Add Skill** or **Upload Skill**
-5. Select the extracted `bookmark-ninja` folder
-6. Enable the skill
+1. Click the green **Code** button on this page and select **Download ZIP**
+2. Extract the ZIP and locate the `bookmark-ninja` folder inside
+3. Open your OpenClaw dashboard
+4. Navigate to the **Skills** tab
+5. Click **Add Skill** or **Upload Skill**
+6. Select the extracted `bookmark-ninja` folder
+7. Enable the skill
 
 Bookmark Ninja will appear in your agent skill list and activate automatically on bookmark-related tasks.
 
