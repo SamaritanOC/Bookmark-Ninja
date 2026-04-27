@@ -85,34 +85,6 @@ Output: bookmarks-index.json — structured, searchable, agent-ready.
     # Find dead links
     dead = [b for b in bookmarks if b.get("alive") == False]
 
----
-## Wiring Bookmark Ninja into Your Agents
-
-Installing this skill makes it available, but your agents won't query it
-automatically. Add explicit instructions to each agent's `TOOLS.md` so they
-know to check the bookmark library before searching the web.
-
-Add this to each investigative agent's `TOOLS.md`:
-----
-## OSINT Source Discovery — Bookmark Ninja
-Before executing searches, query the bookmark library to identify the best
-specialist sources for the target seed type.
-
-# Search by keyword
-python3 ~/.openclaw/skills/bookmark-ninja/bookmark-parser.py \
-  /path/to/bookmarks.html --search "KEYWORD" --format json
-
-# List all categories
-python3 ~/.openclaw/skills/bookmark-ninja/bookmark-parser.py \
-  /path/to/bookmarks.html --stats
-
-When to query:
-- At case open — run --stats to orient to available categories
-- Before tool selection — search for your seed type to surface specialist sources
-- When web searches return thin results — query for alternative sources
-
-Changes take effect on the next new agent session.
------
 
 ## Usage
 
