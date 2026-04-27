@@ -190,6 +190,35 @@ Fields: url, title, category (full folder path as breadcrumb), description, date
 
 ---
 
+## Wiring Bookmark Ninja into Your Agents
+
+Installing this skill makes it available — but in a multi-agent setup, each
+agent follows its own workspace instructions. Your agents won't query the
+bookmark library automatically unless you tell them to.
+
+**Skills provide capability. Workspace files tell the agent when and how to use it. You need both.**
+
+Add this block to each investigative agent's `TOOLS.md`:
+
+    OSINT Source Discovery — Bookmark Ninja
+    Before executing searches, query the bookmark library to identify the best
+    specialist sources for the target seed type.
+    Search by keyword — find sources relevant to target type
+    python3 ~/.openclaw/skills/bookmark-ninja/bookmark-parser.py
+    /path/to/bookmarks.html --search "KEYWORD" --format json
+    List all categories available
+    python3 ~/.openclaw/skills/bookmark-ninja/bookmark-parser.py
+    /path/to/bookmarks.html --stats
+    When to query:
+
+    At case open — run --stats to orient to available categories
+    Before tool selection — search for your seed type to surface specialist sources
+    When web searches return thin results — query for alternative sources
+
+> Changes take effect on the next new agent session.
+
+---
+
 ## Part of The Samaritan Project
 
 This tool was built for and extracted from [The Samaritan Project](https://buymeacoffee.com/thesamaritanproject) — a build-in-public, self-hosted, multi-agent OSINT and intelligence research platform built on OpenClaw running on Parrot OS bare metal.
