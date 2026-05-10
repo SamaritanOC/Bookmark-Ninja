@@ -1,53 +1,61 @@
-# Bookmark Ninja
-<img src="https://labb.run/wp-content/uploads/2025/11/bkm-ninja-logo.png">
+<img src="https://smbconsultants.ai/wp-content/uploads/2026/04/Bookmark-Ninja.png">
+
 **Turn your browser bookmarks into a knowledge base your AI agent can actually search.**
 
-Converts any browser HTML bookmark export into a clean, structured JSON index with full folder hierarchy preserved, deduplication, merge support, and optional URL liveness verification.
+Bookmark Ninja converts any browser HTML bookmark export into a clean, structured JSON or CSV index with full folder hierarchy preserved, deduplication, merge support, and optional URL liveness verification. One command, no API keys, no external services, no configuration.
 
-Built as an internal tool for [The Samaritan Project](https://buymeacoffee.com/thesamaritanproject) — a self-hosted, multi-agent OSINT and intelligence research platform built on OpenClaw running on Parrot OS bare metal. In production it manages a 1,900+ entry intelligence source library across 246 categories, used by 11 specialized investigation agents.
+**Version:** 1.1.0
 
 ---
 
-## How It Works
+## Compatibility
 
-Browser export (HTML) -> bookmark-parser.py -> bookmarks-index.json -> agent queries it
+Bookmark Ninja works on any platform that supports the Agent Skill standard:
 
-One command. No API keys. No external services. No configuration.
+- Claude.ai
+- Cowork
+- Claude Code
+- Codex
+- OpenClaw
+- Any platform supporting the Agent Skill standard
+
+**Runtime requirements:** Python 3.7+. Optional: `requests` library for URL liveness checking (`pip install requests`).
 
 ---
 
 ## Installation
 
-**Requirements:** Python 3.7+. No API keys. No external services.
+### Claude.ai / Cowork
+1. Download this repository as a ZIP (green **Code** button → **Download ZIP**)
+2. Extract the ZIP
+3. Go to **Settings → Capabilities → Skills**
+4. Upload the `bookmark-ninja` folder
+5. Enable the skill
 
-**Optional:** requests library for URL liveness checking:
+### Claude Code
+```bash
+cp -r bookmark-ninja ~/.claude/skills/
+```
 
-    pip install requests
+### OpenClaw Dashboard
+1. Click the green **Code** button → **Download ZIP**
+2. Extract the ZIP and locate the `bookmark-ninja` folder
+3. Open your OpenClaw dashboard → **Skills** tab
+4. Click **Add Skill** and select the extracted `bookmark-ninja` folder
+5. Enable the skill
 
-### Method 1: OpenClaw Dashboard (Recommended)
+### OpenClaw terminal
+```bash
+cp -r bookmark-ninja ~/.openclaw/skills/
+systemctl --user restart openclaw-gateway.service
+```
 
-1. Click the green **Code** button on this page and select **Download ZIP**
-2. Extract the ZIP and locate the `bookmark-ninja` folder inside
-3. Open your OpenClaw dashboard
-4. Navigate to the **Skills** tab
-5. Click **Add Skill** or **Upload Skill**
-6. Select the extracted `bookmark-ninja` folder
-7. Enable the skill
-
-Bookmark Ninja will appear in your agent skill list and activate automatically on bookmark-related tasks.
-
-### Method 2: Command Line
-
-    git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
-    cp -r Bookmark-Ninja/bookmark-ninja ~/.openclaw/skills/
-    systemctl --user restart openclaw-gateway.service
-    openclaw skills list
-
-### Method 3: Standalone (no OpenClaw)
-
-    git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
-    cd Bookmark-Ninja
-    python3 bookmark-ninja/bookmark-parser.py your-bookmarks.html
+### Standalone (no agent platform)
+```bash
+git clone https://github.com/SamaritanOC/Bookmark-Ninja.git
+cd Bookmark-Ninja
+python3 scripts/bookmark-parser.py your-bookmarks.html
+```
 
 ---
 
@@ -57,137 +65,141 @@ Bookmark Ninja will appear in your agent skill list and activate automatically o
 
 | Browser | Steps |
 |---|---|
-| Chrome | Menu -> Bookmarks -> Bookmark Manager -> More -> Export bookmarks |
-| Firefox | Menu -> Bookmarks -> Manage Bookmarks -> Import and Backup -> Export Bookmarks to HTML |
-| Edge / Brave | Same as Chrome |
+| Chrome | Menu → Bookmarks → Bookmark Manager → ⋮ → Export bookmarks |
+| Firefox | Menu → Bookmarks → Manage Bookmarks → Import and Backup → Export Bookmarks to HTML |
+| Edge | Menu → Favorites → ⋮ → Export favorites |
+| Brave | Same as Chrome |
 
-Saves as bookmarks_[date].html
+Saves as `bookmarks_[date].html`.
 
 **2. Run the parser**
 
-    python3 bookmark-ninja/bookmark-parser.py bookmarks.html
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html
+```
 
-Output: bookmarks-index.json — structured, searchable, agent-ready.
+Output: `bookmarks-index.json` — structured, searchable, agent-ready.
 
 **3. Query from your agent**
 
-    import json
+```python
+import json
 
-    with open("bookmarks-index.json") as f:
-        bookmarks = json.load(f)
+with open("bookmarks-index.json") as f:
+    bookmarks = json.load(f)
 
-    # Search by keyword
-    results = [b for b in bookmarks if "osint" in b["title"].lower()]
+# Search by keyword
+results = [b for b in bookmarks if "osint" in b["title"].lower()]
 
-    # Filter by category
-    email_tools = [b for b in bookmarks if "Email Search" in b["category"]]
+# Filter by category
+email_tools = [b for b in bookmarks if "Email Search" in b["category"]]
 
-    # Find dead links
-    dead = [b for b in bookmarks if b.get("alive") == False]
+# Find dead links
+dead = [b for b in bookmarks if b.get("alive") == False]
+```
 
+---
 
 ## Usage
 
 ### Parse bookmarks
 
-    python3 bookmark-ninja/bookmark-parser.py bookmarks.html
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html
+```
 
 ### Custom output location
 
-    python3 bookmark-ninja/bookmark-parser.py bookmarks.html -o ~/research/sources.json
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html -o ~/research/sources.json
+```
 
 ### Merge new bookmarks into existing index
 
-    # First import
-    python3 bookmark-ninja/bookmark-parser.py bookmarks-jan.html -o index.json
+```bash
+# First import
+python3 scripts/bookmark-parser.py bookmarks-jan.html -o index.json
 
-    # Add new bookmarks later — conflicts prompted interactively
-    python3 bookmark-ninja/bookmark-parser.py bookmarks-apr.html -o index.json --merge
+# Add new bookmarks later — conflicts prompted interactively
+python3 scripts/bookmark-parser.py bookmarks-apr.html -o index.json --merge
 
-    # Auto-resolve conflicts
-    python3 bookmark-ninja/bookmark-parser.py bookmarks-apr.html -o index.json --merge --keep-new
+# Auto-resolve conflicts
+python3 scripts/bookmark-parser.py bookmarks-apr.html -o index.json --merge --keep-new
+```
 
 ### Verify URL liveness
 
-    python3 bookmark-ninja/bookmark-parser.py bookmarks.html --check-alive
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html --check-alive
+```
 
-Adds alive: true/false to each entry. Note: 5s timeout per URL — slow on large collections.
+Adds `alive: true/false` to each entry. Note: 5s timeout per URL — slow on large collections.
 
 ### Statistics without saving
 
-    python3 bookmark-ninja/bookmark-parser.py bookmarks.html --stats
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html --stats
+```
 
 ### Export as CSV
 
-    python3 bookmark-ninja/bookmark-parser.py bookmarks.html --format csv
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html --format csv
+```
+
+### Both formats at once
+
+```bash
+python3 scripts/bookmark-parser.py bookmarks.html --format both
+```
 
 ---
 
 ## Output Format
 
-    [
-      {
-        "url": "https://dehashed.com/",
-        "title": "DeHashed -- #FreeThePassword",
-        "category": "OSINT > Breach Data/Dumps",
-        "description": "Searches breach, paste, or leak data for emails, usernames, and exposed records.",
-        "date_added": "2026-03-14T09:20:00",
-        "icon": "",
-        "alive": true
-      }
-    ]
+```json
+[
+  {
+    "url": "https://dehashed.com/",
+    "title": "DeHashed — #FreeThePassword",
+    "category": "OSINT > Breach Data/Dumps",
+    "description": "Searches breach, paste, or leak data for emails, usernames, and exposed records.",
+    "date_added": "2026-03-14T09:20:00",
+    "icon": "",
+    "alive": true
+  }
+]
+```
 
-Fields: url, title, category (full folder path as breadcrumb), description, date_added (ISO 8601), icon, alive (present only if liveness check was run).
+Fields: `url`, `title`, `category` (full folder path as breadcrumb), `description`, `date_added` (ISO 8601), `icon`, `alive` (present only if liveness check was run).
 
 ---
 
 ## Command Reference
 
-    usage: bookmark-parser.py [-h] [-o OUTPUT] [--format {json,csv,both}]
-                              [--merge] [--keep-old] [--keep-new]
-                              [--check-alive] [--stats]
-                              input
+```
+usage: bookmark-parser.py [-h] [-o OUTPUT] [--format {json,csv,both}]
+                          [--merge] [--keep-old] [--keep-new]
+                          [--check-alive] [--stats]
+                          input
 
-    positional arguments:
-      input           HTML bookmark file to parse
+Convert browser bookmarks to machine-readable index
 
-    options:
-      -o OUTPUT       Output path (default: bookmarks-index.json)
-      --format        Output format: json, csv, or both (default: json)
-      --merge         Merge with existing index file
-      --keep-old      On conflict, keep old entry (default: prompt)
-      --keep-new      On conflict, keep new entry (default: prompt)
-      --check-alive   Verify URL liveness via HEAD request
-      --stats         Show statistics only, do not save
+positional arguments:
+  input                 HTML bookmark file to parse
 
----
-
-## Wiring Bookmark Ninja into Your Agents
-
-Installing this skill makes it available — but in a multi-agent setup, each
-agent follows its own workspace instructions. Your agents won't query the
-bookmark library automatically unless you tell them to.
-
-**Skills provide capability. Workspace files tell the agent when and how to use it. You need both.**
-
-Add this block to each investigative agent's `TOOLS.md`:
-
-    OSINT Source Discovery — Bookmark Ninja
-    Before executing searches, query the bookmark library to identify the best
-    specialist sources for the target seed type.
-    Search by keyword — find sources relevant to target type
-    python3 ~/.openclaw/skills/bookmark-ninja/bookmark-parser.py
-    /path/to/bookmarks.html --search "KEYWORD" --format json
-    List all categories available
-    python3 ~/.openclaw/skills/bookmark-ninja/bookmark-parser.py
-    /path/to/bookmarks.html --stats
-    When to query:
-
-    At case open — run --stats to orient to available categories
-    Before tool selection — search for your seed type to surface specialist sources
-    When web searches return thin results — query for alternative sources
-
-> Changes take effect on the next new agent session.
+options:
+  -h, --help            show this help message and exit
+  -o OUTPUT, --output OUTPUT
+                        Output file path (default: bookmarks-index.json)
+  --format {json,csv,both}
+                        Output format (default: json)
+  --merge               Merge with existing index file
+  --keep-old            On merge conflict, keep old entry (default: prompt)
+  --keep-new            On merge conflict, keep new entry (default: prompt)
+  --check-alive         Check URL liveness via HEAD request (adds latency)
+  --stats               Print statistics only, don't save
+```
 
 ---
 
@@ -195,7 +207,7 @@ Add this block to each investigative agent's `TOOLS.md`:
 
 This tool was built for and extracted from [The Samaritan Project](https://buymeacoffee.com/thesamaritanproject) — a build-in-public, self-hosted, multi-agent OSINT and intelligence research platform built on OpenClaw running on Parrot OS bare metal.
 
-Samaritan is an OSINT automation platform that runs 11 specialized investigation agents. Bookmark Ninja is the pipeline that feeds its 1,900+ entry intelligence source library across 246 categories. This is one of several internal tools extracted and open sourced from a production AI investigation platform.
+Samaritan runs 11 specialized investigation agents. Bookmark Ninja is the pipeline that feeds its 1,900+ entry intelligence source library across 246 categories. This is one of several internal tools extracted and open sourced from a production AI investigation platform.
 
 Support The Samaritan Project at [buymeacoffee.com/thesamaritanproject](https://buymeacoffee.com/thesamaritanproject)
 
@@ -206,8 +218,7 @@ Support The Samaritan Project at [buymeacoffee.com/thesamaritanproject](https://
 MIT — free to use, modify, and distribute.
 
 ---
+
 ## About the developer
 
-[**Harold Mansfield**](https://linkedin.com/in/haroldmansfield/) - AI Integration Consultant | AI Coaching | Agentic OSINT Automation | Sec+ CySA+
-
-
+[**Harold Mansfield**](https://linkedin.com/in/haroldmansfield/) — AI Integration Consultant | AI Coaching | Agentic OSINT Automation | Sec+ CySA+

@@ -2,6 +2,6 @@ __pycache__/
 *.pyc
 *.pyo
 .DS_Store
+.backup-*/
 bookmarks-index.json
-*.csv
-*.html
+bookmarks-index.csv
